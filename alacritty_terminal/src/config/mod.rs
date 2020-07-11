@@ -128,6 +128,8 @@ pub struct Cursor {
     pub style: CursorStyle,
     #[serde(deserialize_with = "option_explicit_none")]
     pub vi_mode_style: Option<CursorStyle>,
+    #[serde(deserialize_with = "failure_default")]
+    pub blink_rate: u32,
     #[serde(deserialize_with = "deserialize_cursor_thickness")]
     thickness: Percentage,
     #[serde(deserialize_with = "failure_default")]
@@ -153,6 +155,7 @@ impl Default for Cursor {
             vi_mode_style: Default::default(),
             thickness: Percentage::new(DEFAULT_CURSOR_THICKNESS),
             unfocused_hollow: Default::default(),
+            blink_rate: Default::default(),
         }
     }
 }

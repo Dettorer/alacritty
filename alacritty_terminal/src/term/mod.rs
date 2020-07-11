@@ -55,6 +55,7 @@ struct RenderableCursor {
 pub struct CursorKey {
     pub style: CursorStyle,
     pub is_wide: bool,
+    pub blink_rate: u32,
 }
 
 type MatchIter<'a> = Box<dyn Iterator<Item = RangeInclusive<Point<usize>>> + 'a>;
@@ -1307,10 +1308,13 @@ impl<T> Term<T> {
             cell.flags.contains(Flags::WIDE_CHAR)
         };
 
+        // Blinking
+        let blink_rate = config.cursor.blink_rate;
+
         RenderableCursor {
             text_color,
             cursor_color,
-            key: CursorKey { style: cursor_style, is_wide },
+            key: CursorKey { style: cursor_style, is_wide, blink_rate },
             point,
             rendered: false,
         }
